@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-Title: oauth2.exemplo Maven Webapp
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.cnbatalha
+Build-Jdk: 1.7.0_79
+Built-By: Carlos
+Created-By: Maven Integration for Eclipse
+
