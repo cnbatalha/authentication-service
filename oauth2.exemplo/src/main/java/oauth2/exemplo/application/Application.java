@@ -51,29 +51,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 // Any class in this package that is annotated with @Controller is going to be
 // automatically discovered and connected to the DispatcherServlet.
 @ComponentScan(basePackages = { "oauth2.exemplo" }, excludeFilters = { @Filter(type = FilterType.ANNOTATION, value = Configuration.class) })
-
 public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-
-	// @RequestMapping("/") public String home() { return "Hello World"; }
-
-	// @Configuration
-	// @EnableResourceServer
-	// protected static class ResourceServer extends
-	// ResourceServerConfigurerAdapter {
-	//
-	// @Override
-	// public void configure(HttpSecurity http) throws Exception {
-	//
-	// http.authorizeRequests().antMatchers("/oauth/authorize")
-	// .permitAll();
-	//
-	// }
-	//
-	// }
 
 	@Configuration
 	@EnableWebSecurity
@@ -106,7 +88,10 @@ public class Application {
 
 			http.csrf().disable();
 
-			http.authorizeRequests().antMatchers("/oauth/token").anonymous();
+			http.authorizeRequests()
+				.antMatchers("/oauth/token").anonymous()
+				.antMatchers("/uaa", "/uaa/**").permitAll();
+			
 
 			// If you were going to reuse this class in another
 			// application, this is one of the key sections that you
@@ -149,14 +134,15 @@ public class Application {
 					.authorizedGrantTypes("password")
 					.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
 					.scopes("read", "write")
-					.resourceIds("video")
+					//.resourceIds("uaa")
 					.and()
 					// Create a second client that only has "read" access to the
 					// video service
 					.withClient("mobileReader")
 					.authorizedGrantTypes("password")
 					.authorities("ROLE_CLIENT").scopes("read")
-					.resourceIds("video").accessTokenValiditySeconds(3600)
+					//.resourceIds("uaa")
+					.accessTokenValiditySeconds(3600)
 					.and().build();
 
 			// Create a series of hard-coded users.
